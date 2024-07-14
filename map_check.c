@@ -13,7 +13,7 @@
 #include <fcntl.h>
 #include <stdio.h>
 
-char	**map_check(char *file_name)
+char	**map_check(char *file_name, )
 {
 	int		fd;
 	char	*line;
@@ -52,5 +52,56 @@ char	**map_maker(char *f_n, int tlen, int len)
 		return (NULL);
 	len = read(fd, buff, tlen + 1);
 	buff[len] = '\0';
+	if (!counter(buff))
+		return (NULL);
 	return (ft_split(buff, '\n'));
+}
+
+int	counter(char *buf)
+{
+	int	ep;
+	int	c;
+	int	i;
+
+	ep = 0;
+	c = 0;
+	i = 0;
+	while (buf[i] != '\0')
+	{
+		if (buf[i] == 'E' || buf[i] == 'P')
+			ep++;
+		if (buf[i] == 'C')
+			c++;
+		i++;
+	}
+	if (ep != 2 || c == 0)
+		return (0);
+	return (1);
+}
+
+int	is_enclosed(char **map)
+{
+	int	i;
+	int	j;
+	int	k;
+
+	i = 0;
+	j = 0;
+	k = 1;
+	while (map[i])
+		i++;
+	while (map[0][j] == '1')
+		if (map[0][j++] != '1')
+			return (0);
+	while (map[k] && k < i - 1)
+	{
+		if (map[k][0] != '1' && map[k][j - 1] != '1')
+			return (0);
+		k++;
+	}
+	j = 0;
+	while (map[i - 1][j] == '1')
+		if (map[i - 1][j++] != '1')
+			return (0);
+	return (1);
 }
