@@ -11,9 +11,9 @@
 /* ************************************************************************** */
 
 #include <fcntl.h>
-#include <stdio.h>
+#include "so_long.h"
 
-char	**map_check(char *file_name, )
+char	**map_check(char *file_name)
 {
 	int		fd;
 	char	*line;
@@ -23,13 +23,13 @@ char	**map_check(char *file_name, )
 
 	totlen = 0;
 	fd = open(file_name, O_RDONLY);
-	(if fd == -1)
+	if (fd == -1)
 		return (NULL);
 	while (1)
 	{
 		line = get_next_line(fd);
 		if (!line)
-			break;
+			break ;
 		if (!totlen)
 			len = ft_strlen(line);
 		totlen += len;
@@ -40,21 +40,32 @@ char	**map_check(char *file_name, )
 	return (map_maker(file_name, totlen));
 }
 
-char	**map_maker(char *f_n, int tlen, int len)
+char	**map_maker(char *f_n, int tlen)
 {
 	int		fd;
-	char	**map
-	char	buff[tlen + 1];
+	char	**map;
+	char	*buff;
 	int		len;
 
+	buff = malloc(sizeof(char) * (tlen + 1));
 	fd = open(f_n, O_RDONLY);
-	(if fd == -1)
+	if (fd == -1)
 		return (NULL);
 	len = read(fd, buff, tlen + 1);
 	buff[len] = '\0';
 	if (!counter(buff))
+	{
+		free(buff);
 		return (NULL);
-	return (ft_split(buff, '\n'));
+	}
+	map = ft_split(buff, '\n');
+	if (is_enclosed(map))
+	{
+		free(buff);
+		return (NULL);
+	}
+	free(buff);
+	return (map);
 }
 
 int	counter(char *buf)
@@ -76,7 +87,7 @@ int	counter(char *buf)
 	}
 	if (ep != 2 || c == 0)
 		return (0);
-	return (1);
+	return (c);
 }
 
 int	is_enclosed(char **map)
@@ -95,7 +106,7 @@ int	is_enclosed(char **map)
 			return (0);
 	while (map[k] && k < i - 1)
 	{
-		if (map[k][0] != '1' && map[k][j - 1] != '1')
+		if (map[k][0] != '1' || map[k][j - 1] != '1')
 			return (0);
 		k++;
 	}
@@ -104,4 +115,32 @@ int	is_enclosed(char **map)
 		if (map[i - 1][j++] != '1')
 			return (0);
 	return (1);
+}
+
+char	**map_cpy(char **map)
+{
+	int		i;
+	int		j;
+	char	**mcpy;
+	int		len;
+
+	i = 0;
+	while (map[0][j])
+		j++;
+	while (map[i])
+		i++;
+	mcpy = malloc(sizeof(char *) * (i + 1));
+	if (!mcpy)
+		return (NULL);
+	len = i;
+	i = 0;
+	while (i < len)
+	{
+		mcpy[i] = malloc(sizeof(char) * (j + 1));
+		if (!mcpy[i])
+			return (NULL);
+		mcpy[i][j] = '\0';
+		i++;
+	}
+	return (mcpy);
 }

@@ -52,12 +52,7 @@ char	*holder(long size, char *stor, char *lin, int *nl)
 		return (NULL);
 	filler(hold, lin);
 	adder(hold, stor);
-	if (lin != NULL)
-	{
-		eraser(lin, str_length(lin));
-		free(lin);
-	}
-	lin = NULL;
+	free(lin);
 	return (hold);
 }
 

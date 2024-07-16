@@ -10,26 +10,34 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "get_next_line.h"
+#include "so_long.h"
 #include <fcntl.h>
 #include <stdio.h>
 
 int	main(void)
 {
-	int		fd;
-	char	*line;
-	int		i;
+	int		c_count;
+	char	**cpy;
+	t_map	*m;
 
-	i = 3;
-	fd = open("test.txt", O_RDONLY);
-	while (1)
+	m = (t_map *)malloc(sizeof(t_map));
+    if (!m)
+        return (1);
+	m->map = map_check("map.ber");
+	if (!m->map)
 	{
-		line = get_next_line(fd);
-		if (line == NULL)
-			break ;
-		printf("%s", line);
-		free(line);
-		i--;
+		free(m);
+		return (1);
 	}
+	c_count = c_finder(m->map, m, 0);
+	cpy = map_cpy(m->map);
+	if (!floodfill(m->map, cpy, m))
+		ft_printf("wowowow the map is not valid");
+	if (m->c_count != c_count)
+	{
+		free(m);
+		return (1);
+	}
+	free(m);
 	return (0);
 }
