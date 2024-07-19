@@ -6,7 +6,7 @@
 /*   By: thomvan- <thomvan-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/13 13:27:25 by marvin            #+#    #+#             */
-/*   Updated: 2024/07/19 16:16:57 by thomvan-         ###   ########.fr       */
+/*   Updated: 2024/07/19 17:17:29 by thomvan-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -131,6 +131,7 @@ char	**map_cpy(char **map)
 	int		len;
 
 	i = 0;
+	j = 0;
 	while (map[0][j])
 		j++;
 	while (map[i])
@@ -142,7 +143,7 @@ char	**map_cpy(char **map)
 	i = 0;
 	while (i < len)
 	{
-		mcpy[i] = malloc(sizeof(char) * (j + 1));
+		mcpy[i] = calloc((j + 1), sizeof(char));
 		if (!mcpy[i])
 			return (NULL);
 		mcpy[i][j] = '\0';

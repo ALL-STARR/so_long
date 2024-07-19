@@ -6,7 +6,7 @@
 /*   By: thomvan- <thomvan-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/15 11:37:15 by marvin            #+#    #+#             */
-/*   Updated: 2024/07/19 16:42:17 by thomvan-         ###   ########.fr       */
+/*   Updated: 2024/07/19 17:29:33 by thomvan-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,8 +15,7 @@
 
 int	is_valid(char **map, char **been, int row, int col)
 {
-	return ((row >= 0) && (col >= 0)
-		&& (map[row][col] != WALL) && (!been[row][col]));
+	return ((map[row][col] != WALL) && (!been[row][col]));
 }
 
 int	floodfill(char **map, char **been, t_map *m)
@@ -28,6 +27,8 @@ int	floodfill(char **map, char **been, t_map *m)
 	t_map		new_pos;
 
 	i = 0;
+	new_pos.end.col = m->end.col;
+	new_pos.end.row = m->end.row;
 	been[m->st.row][m->st.col] = 1;
 	if (m->st.row == m->end.row && m->st.col == m->end.col)
 		return (1);
