@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   flood_fill.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: marvin <marvin@student.42.fr>              +#+  +:+       +#+        */
+/*   By: thomvan- <thomvan-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/15 11:37:15 by marvin            #+#    #+#             */
-/*   Updated: 2024/07/15 11:37:15 by marvin           ###   ########.fr       */
+/*   Updated: 2024/07/19 16:42:17 by thomvan-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,13 +28,13 @@ int	floodfill(char **map, char **been, t_map *m)
 	t_map		new_pos;
 
 	i = 0;
-	been[m->st.row][m->st.col] = '1';
+	been[m->st.row][m->st.col] = 1;
 	if (m->st.row == m->end.row && m->st.col == m->end.col)
 		return (1);
-	while (i++ < 4)
+	while (i < 4)
 	{
-		new_row = m->st.row + directions[i][1];
-		new_col = m->st.col + directions[i][0];
+		new_row = m->st.row + directions[i][0];
+		new_col = m->st.col + directions[i][1];
 		if (is_valid(map, been, new_row, new_col))
 		{
 			if (map[new_row][new_col] == COLL)
@@ -44,6 +44,7 @@ int	floodfill(char **map, char **been, t_map *m)
 			if (floodfill(map, been, &new_pos))
 				return (1);
 		}
+		i++;
 	}
 	return (0);
 }
@@ -54,10 +55,10 @@ int	c_finder(char **map, t_map *m, int count)
 	int	j;
 
 	i = 0;
-	j = 0;
-	while (map[i++])
+	while (map[i])
 	{
-		while (map[i][j++])
+		j = 0;
+		while (map[i][j])
 		{
 			if (map[i][j] == 'C')
 				count++;
@@ -71,7 +72,9 @@ int	c_finder(char **map, t_map *m, int count)
 				m->end.row = i;
 				m->end.col = j;
 			}
+			j++;
 		}
+		i++;
 	}
 	return (count);
 }

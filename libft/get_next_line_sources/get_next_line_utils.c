@@ -12,7 +12,7 @@
 
 #include "get_next_line.h"
 
-char	*read_store(char *stor, int fd, int *nf)
+char	*read_store(char *stor, int fd, int nf)
 {
 	int		red;
 	long	size;
@@ -21,7 +21,7 @@ char	*read_store(char *stor, int fd, int *nf)
 	size = 0;
 	line = NULL;
 	red = 1;
-	if (*nf && stor[0])
+	if (nf && stor[0])
 	{
 		line = holder(str_length(stor), stor, line, &red);
 		if (!line)
@@ -49,10 +49,19 @@ char	*holder(long size, char *stor, char *lin, int *nl)
 		*nl = -1;
 	hold = malloc(sizeof(char) * (size + 1));
 	if (!hold)
+	{
+		if (lin)
+			free(lin);
 		return (NULL);
+	}
 	filler(hold, lin);
 	adder(hold, stor);
-	free(lin);
+	if (lin != NULL)
+	{
+		eraser(lin, str_length(lin));
+		free(lin);
+	}
+	lin = NULL;
 	return (hold);
 }
 

@@ -15,7 +15,6 @@
 
 # include <unistd.h>
 # include <stdlib.h>
-
 # ifdef BUFFER_SIZE 
 #  if BUFFER_SIZE >= 2147483647 || BUFFER_SIZE < 0
 #   undef BUFFER_SIZE
@@ -28,7 +27,7 @@
 # endif
 
 char	*get_next_line(int fd);
-char	*read_store(char *stor, int fd, int	*nf);
+char	*read_store(char *stor, int fd, int nf);
 char	*holder(long size, char *stor, char *line, int *nl);
 char	*filler(char *to_fill, char *fill);
 void	adder(char *base, char *to_add);

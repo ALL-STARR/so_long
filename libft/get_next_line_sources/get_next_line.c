@@ -25,7 +25,7 @@ char	*get_next_line(int fd)
 		eraser(stored, BUFFER_SIZE);
 		return (NULL);
 	}
-	line = read_store(stored, fd, &not_first);
+	line = read_store(stored, fd, not_first);
 	if (!line && eraser(stored, BUFFER_SIZE))
 		return (NULL);
 	filler(stored, stored + str_length(stored));

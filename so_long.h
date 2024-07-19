@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   so_long.h                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: marvin <marvin@student.42.fr>              +#+  +:+       +#+        */
+/*   By: thomvan- <thomvan-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/13 16:10:44 by marvin            #+#    #+#             */
-/*   Updated: 2024/07/13 16:10:44 by marvin           ###   ########.fr       */
+/*   Updated: 2024/07/19 16:11:29 by thomvan-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,5 +59,7 @@ int		counter(char *buf);
 int		c_finder(char **map, t_map *m, int count);
 int		is_enclosed(char **map);
 char	**map_cpy(char **map);
+t_map	t_mapinit(t_map m);
+void	mapdisplay(char **map);
 
 #endif
