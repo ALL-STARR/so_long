@@ -47,6 +47,7 @@ typedef struct s_map
 	int		c_count;
 	t_data	data;
 	char	**map;
+	int		collected;
 
 }	t_map;
 

@@ -33,8 +33,8 @@ int	floodfill(char **map, char **been, t_map *m)
 		return (1);
 	while (i++ < 4)
 	{
-		new_row = m->st.row + directions[i][0];
-		new_col = m->st.col + directions[i][1];
+		new_row = m->st.row + directions[i][1];
+		new_col = m->st.col + directions[i][0];
 		if (is_valid(map, been, new_row, new_col))
 		{
 			if (map[new_row][new_col] == COLL)

@@ -2,6 +2,10 @@
 # define MLX_TEST_H
 
 # define GRASS "Grass.xpm"
+# define LEFT 0
+# define RIGHT 1
+# define UP 2
+# define DOWN 3
 
 typedef struct s_map
 {
