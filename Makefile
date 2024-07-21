@@ -1,5 +1,5 @@
 # -----------------------------------Makefile------------------------------------
-NAME	= so_long.a
+NAME	= so_long
 
 # -----------------------------------Sources-------------------------------------
 
@@ -10,7 +10,9 @@ HEADER	= so_long.h \
 
 SO_LONG_SRCS 	= main.c  \
 				flood_fill.c\
-				map_check.c
+				map_check.c\
+				X_utils.c\
+				movement.c
 
 
 
@@ -24,6 +26,10 @@ OBJS	= ${ALL_SRC:.c=.o}
 
 FT_FOLDER = ./libft
 
+MLX_FOLDER = ./mlx
+
+MLX = ${MLX_FOLDER}/libmlx.a
+
 FT = ${FT_FOLDER}/libft.a
 
 CC		= gcc -g -fsanitize=address 
@@ -36,19 +42,26 @@ RM		= rm -f
 
 MAKE_FT = make -s -C ${FT_FOLDER}
 
+MAKE_MLX = make -s -C ${MLX_FOLDER}
+
+MLX_FLAGS = -Lmlx -lmlx  -framework OpenGL -framework AppKit
+
 # -----------------------------------Libraries--------------------------------------
 
-INCLUDES = -I ./includes
+INCLUDES = -I ./includes ./libft/includes -I ./mlx
 
 # -----------------------------------Rules------------------------------------------
 
 all: ${NAME}
 
-${NAME}: ${FT} ${OBJS}
-		${LIB} ${NAME} ${OBJS}
+$(NAME): $(OBJS) ${MLX} ${FT}
+	$(CC) $(FLAGS) -o $(NAME)  $(OBJS) ${MLX} ${FT} $(MLX_FLAGS)
 
 ${FT}: 
 		${MAKE_FT}
+
+${MLX}:
+		${MAKE_MLX}
 
 %.o: %.c ${HEADER}
 	${CC} ${FLAGS} -c ${INCLUDES} $< -o $@
@@ -61,6 +74,7 @@ clean:
 fclean: clean
 		${RM} ${NAME}
 		${MAKE_FT} fclean
+		${MAKE_MLX} fclean
 
 # -----------------------------------.phony--------------------------------------
 

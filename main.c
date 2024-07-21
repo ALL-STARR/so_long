@@ -6,7 +6,7 @@
 /*   By: thomvan- <thomvan-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/10 16:49:30 by marvin            #+#    #+#             */
-/*   Updated: 2024/07/19 17:12:34 by thomvan-         ###   ########.fr       */
+/*   Updated: 2024/07/21 16:31:34 by thomvan-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,21 +14,29 @@
 #include <fcntl.h>
 #include <stdio.h>
 
-int	main(void)
+int	main(int arc, char **arv)
 {
-	int		c_count;
-	char	**cpy;
 	t_map	m;
-
-	m = t_mapinit(m);
-	m.map = map_check("map.ber");
-	mapdisplay(m.map);
-	c_count = c_finder(m.map, &m, 0);
-	cpy = map_cpy(m.map);
-	if (!floodfill(m.map, cpy, &m))
-		ft_printf("wowowow the map is not valid");
-	if (m.c_count != c_count)
+	
+	if(arc != 2)
+	{
+		ft_printf("Error : please only provide the map's name\n");
 		return (1);
+	}
+	m = t_mapinit(m);
+	if (!mapper(&m, arv[1]))
+		return (1);
+	mapdisplay(m.map);
+	mapsize(&m, 64);
+	m.data.mlx_ptr = mlx_init();
+	if (!m.data.mlx_ptr)
+		return (1);
+	m.data.win_ptr = mlx_new_window(m.data.mlx_ptr, m.data.h, m.data.w, "hi :)");
+	if (!m.data.win_ptr)
+		return (free(m.data.mlx_ptr), 1);
+	mlx_hook(m.data.win_ptr, KeyPress, KeyPressMask, &on_keypress, &m);
+	mlx_hook(m.data.win_ptr, DestroyNotify, StructureNotifyMask, &on_destroy, &m);
+	mlx_loop(m.data.mlx_ptr);
 	return (0);
 }
 
@@ -52,3 +60,19 @@ void	mapdisplay(char **map)
 	}
 	return ;
 }
+
+char	**mapper(t_map *m, char *name)
+{
+	int	c_count;
+	int	**cpy;
+
+	m->map = map_check(name);
+	if (!m->map)
+		return (NULL);
+	m->c_count = c_finder(m->map, m, 0);
+	cpy = map_cpy(m->map);
+	if (!floodfill(m->map, map_cpy(m->map), m) || !c_f_fill(m->map, cpy, m, m))
+		ft_printf("Error : path missing\n");
+	return (m->map);
+}
+

@@ -6,7 +6,7 @@
 /*   By: thomvan- <thomvan-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/13 13:27:25 by marvin            #+#    #+#             */
-/*   Updated: 2024/07/19 17:17:29 by thomvan-         ###   ########.fr       */
+/*   Updated: 2024/07/21 15:24:21 by thomvan-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,10 +33,9 @@ char	**map_check(char *file_name)
 		if (!totlen)
 			len = ft_strlen(line);
 		totlen += ft_strlen(line) + 1;
-		ft_printf("%d\n", totlen);
 		if (len != ft_strlen(line) || len == 0)
 		{
-			ft_printf("lines are not the same len\n");
+			ft_printf("Error : map is not rectangular\n");
 			return (NULL);
 		}
 	}
@@ -51,7 +50,6 @@ char	**map_maker(char *f_n, int tlen)
 	char	*buff;
 	int		len;
 
-	ft_printf("i did enter map_maker\n");
 	buff = malloc(sizeof(char) * (tlen + 1));
 	fd = open(f_n, O_RDONLY);
 	if (fd == -1)
@@ -60,13 +58,14 @@ char	**map_maker(char *f_n, int tlen)
 	buff[len] = '\0';
 	if (!counter(buff))
 	{
-		ft_printf("wrong number of assets\n");
+		ft_printf("Error : wrong number of assets\n");
 		free(buff);
 		return (NULL);
 	}
 	map = ft_split(buff, '\n');
 	if (!is_enclosed(map))
 	{
+		ft_printf("Error : the map is not enclosed");
 		free(buff);
 		return (NULL);
 	}
@@ -107,7 +106,7 @@ int	is_enclosed(char **map)
 	k = 1;
 	while (map[i])
 		i++;
-	while (map[0][j] == '1')
+	while (map[0][j])
 		if (map[0][j++] != '1')
 			return (0);
 	while (map[k] && k < i - 1)
@@ -117,18 +116,18 @@ int	is_enclosed(char **map)
 		k++;
 	}
 	j = 0;
-	while (map[i - 1][j] == '1')
+	while (map[i - 1][j])
 		if (map[i - 1][j++] != '1')
 			return (0);
 	return (1);
 }
 
-char	**map_cpy(char **map)
+int	**map_cpy(char **map)
 {
-	int		i;
-	int		j;
-	char	**mcpy;
-	int		len;
+	int	i;
+	int	j;
+	int	**mcpy;
+	int	len;
 
 	i = 0;
 	j = 0;
@@ -136,14 +135,14 @@ char	**map_cpy(char **map)
 		j++;
 	while (map[i])
 		i++;
-	mcpy = malloc(sizeof(char *) * (i + 1));
+	mcpy = malloc(sizeof(int *) * (i + 1));
 	if (!mcpy)
 		return (NULL);
 	len = i;
 	i = 0;
 	while (i < len)
 	{
-		mcpy[i] = calloc((j + 1), sizeof(char));
+		mcpy[i] = calloc((j + 1), sizeof(int));
 		if (!mcpy[i])
 			return (NULL);
 		mcpy[i][j] = '\0';
