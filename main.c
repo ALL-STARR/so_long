@@ -6,7 +6,7 @@
 /*   By: thomvan- <thomvan-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/10 16:49:30 by marvin            #+#    #+#             */
-/*   Updated: 2024/07/22 22:20:54 by thomvan-         ###   ########.fr       */
+/*   Updated: 2024/07/22 22:27:06 by thomvan-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -74,6 +74,8 @@ char	**mapper(t_map *m, char *name)
 	if (!floodfill(m->map, map_cpy(m->map), m)
 		|| !c_f_fill(m->map, map_cpy(m->map), m, m))
 		ft_printf("Error : path missing\n");
+	if (er_finder(m->map, m))
+		ft_printf("Error : map invalid characters allowed : 'C' '0' '1' 'E' 'P'\n");
 	return (m->map);
 }
 
