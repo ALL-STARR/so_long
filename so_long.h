@@ -6,7 +6,7 @@
 /*   By: thomvan- <thomvan-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/13 16:10:44 by marvin            #+#    #+#             */
-/*   Updated: 2024/07/21 16:28:36 by thomvan-         ###   ########.fr       */
+/*   Updated: 2024/07/22 22:13:55 by thomvan-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,12 +36,18 @@
 # define DestroyNotify 17
 # define StructureNotifyMask (1L<<17)
 
+# define Grass "grass_tile.xpm"
+# define Wall "tile_wall-_1_.xpm"
+# define Open "door_open.xpm"
+# define Close "door_closed_1.xpm"
+# define Chest "chest.xpm"
+ 
 
 typedef struct s_data
 {
 	void *mlx_ptr;
 	void *win_ptr;
-	void *image_ptr[2];
+	void *image_ptr[6];
 	int  w;
 	int  h;
 } t_data;
@@ -64,6 +70,7 @@ typedef struct s_map
 
 }	t_map;
 
+
 int		is_valid(char **map, int **been, int row, int col);
 int		floodfill(char **map, int **been, t_map *m);
 char	**map_check(char *file_name);
@@ -82,5 +89,7 @@ void	mapsize(t_map *m, int tile_size);
 int 	on_keypress(int keycode, t_map *m);
 int 	on_destroy(t_data *data);
 int		move(int dir, t_map *m);
+t_data	image_loader(t_data data);
+void	map_draw(t_map *m);
 
 #endif

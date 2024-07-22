@@ -6,7 +6,7 @@
 /*   By: thomvan- <thomvan-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/21 15:42:06 by thomvan-          #+#    #+#             */
-/*   Updated: 2024/07/21 16:31:48 by thomvan-         ###   ########.fr       */
+/*   Updated: 2024/07/22 22:21:24 by thomvan-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,11 +40,11 @@ void	mapsize(t_map *m, int tile_size)
 	i = 0;
 	j = 0;
 
-	while (m->map[i])
+	while (m->map[i] != NULL)
 		i++;
-	while (m->map[0][j])
+	while (m->map[0][j] != '\0')
 		j++;
-	m->data.w = (i - 1) * tile_size;
-	m->data.h = (j - 1) * tile_size;
+	m->data.w = (i) * tile_size;
+	m->data.h = (j) * tile_size;
 	return ;
 }

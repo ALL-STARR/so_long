@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   movement.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: marvin <marvin@student.42.fr>              +#+  +:+       +#+        */
+/*   By: thomvan- <thomvan-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/19 02:02:41 by marvin            #+#    #+#             */
-/*   Updated: 2024/07/19 02:02:41 by marvin           ###   ########.fr       */
+/*   Updated: 2024/07/22 22:17:33 by thomvan-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,5 +33,32 @@ int	move(int dir, t_map *m)
 	}
 	else
 		return (0);
+}
+
+void	map_draw(t_map *m)
+{
+	int	x;
+	int y;
+
+	x = 0;
+	y = 0;
+	while (m->map[y])
+	{
+		x = 0;
+		while (m->map[y][x])
+		{
+				mlx_put_image_to_window(m->data.mlx_ptr, m->data.win_ptr, m->data.image_ptr[0], x * 32, y * 32);
+			if (m->map[y][x] == WALL)
+				mlx_put_image_to_window(m->data.mlx_ptr, m->data.win_ptr, m->data.image_ptr[1], x * 32, y * 32);
+			if (m->map[y][x] == COLL)
+				mlx_put_image_to_window(m->data.mlx_ptr, m->data.win_ptr, m->data.image_ptr[2], x * 32, y * 32);
+			if (m->map[y][x] == END)
+				mlx_put_image_to_window(m->data.mlx_ptr, m->data.win_ptr, m->data.image_ptr[3], x * 32, y * 32);
+			//if (m->map[y][x] == START)
+			//	mlx_put_image_to_window(m->data.mlx_ptr, m->data.win_ptr, m->data.image_ptr[4], x * 32, y * 32);
+			x++;
+		}
+		y++;
+	}
 }
 

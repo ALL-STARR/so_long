@@ -74,7 +74,6 @@ clean:
 fclean: clean
 		${RM} ${NAME}
 		${MAKE_FT} fclean
-		${MAKE_MLX} fclean
 
 # -----------------------------------.phony--------------------------------------
 
