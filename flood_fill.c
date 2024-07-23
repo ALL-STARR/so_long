@@ -6,7 +6,7 @@
 /*   By: thomvan- <thomvan-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/15 11:37:15 by marvin            #+#    #+#             */
-/*   Updated: 2024/07/20 16:47:19 by thomvan-         ###   ########.fr       */
+/*   Updated: 2024/07/23 18:51:30 by thomvan-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -106,7 +106,7 @@ int	c_finder(char **map, t_map *m, int count)
 	return (count);
 }
 
-int	er_finder(char **map, t_map *m)
+int	er_finder(char **map)
 {
 	int	i;
 	int	j;
@@ -117,10 +117,13 @@ int	er_finder(char **map, t_map *m)
 		j = 0;
 		while (map[i][j])
 		{
-			if (map[i][j] != 'C' || map[i][j] != 'P'
-				|| map[i][j] != 'E' || map[i][j] != '1'
-				|| map[i][j] != '0')
+			if ((map[i][j] != 'C') && (map[i][j] != 'P')
+				&& (map[i][j] != 'E') && (map[i][j] != '1')
+				&& (map[i][j] != '0') && (map[i][j] != '\0')
+				&& (map[i][j] != '\n'))
+			{
 				return (1);
+			}
 			j++;
 		}
 		i++;

@@ -6,7 +6,7 @@
 /*   By: thomvan- <thomvan-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/13 16:10:44 by marvin            #+#    #+#             */
-/*   Updated: 2024/07/22 22:13:55 by thomvan-         ###   ########.fr       */
+/*   Updated: 2024/07/23 19:16:31 by thomvan-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,15 +32,16 @@
 # define key_d 2
 
 # define KeyPress 2
-# define KeyPressMask (1L<<0)
-# define DestroyNotify 17
-# define StructureNotifyMask (1L<<17)
+# define KeyPMask (1L<<0)
+# define DesNotify 17
+# define StructNyMask (1L<<17)
 
-# define Grass "grass_tile.xpm"
-# define Wall "tile_wall-_1_.xpm"
-# define Open "door_open.xpm"
-# define Close "door_closed_1.xpm"
-# define Chest "chest.xpm"
+# define Grass "images/grass_tile.xpm"
+# define Wall "images/tile_wall-_1_.xpm"
+# define Open "images/door_open_1.xpm"
+# define Close "images/door_closed_1.xpm"
+# define Chest "images/chest.xpm"
+# define Player "images/player.xpm"
  
 
 typedef struct s_data
@@ -64,7 +65,7 @@ typedef struct s_map
 	t_pos	end;
 	int		size;
 	int		c_count;
-	t_data	data;
+	t_data	d;
 	char	**map;
 	int		collected;
 
@@ -83,7 +84,7 @@ t_map	t_mapinit(t_map m);
 void	mapdisplay(char **map);
 char	**reset(char ** map);
 int		c_f_fill(char **map, int **been, t_map *m, t_map *pass);
-int		er_finder(char **map, t_map *m);
+int		er_finder(char **map);
 char	**mapper(t_map *m, char *name);
 void	mapsize(t_map *m, int tile_size);
 int 	on_keypress(int keycode, t_map *m);
@@ -91,5 +92,6 @@ int 	on_destroy(t_data *data);
 int		move(int dir, t_map *m);
 t_data	image_loader(t_data data);
 void	map_draw(t_map *m);
+void	drawer(t_map *m, int x, int y, int i);
 
 #endif

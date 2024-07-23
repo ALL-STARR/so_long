@@ -6,7 +6,7 @@
 /*   By: thomvan- <thomvan-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/10 16:49:30 by marvin            #+#    #+#             */
-/*   Updated: 2024/07/22 22:27:06 by thomvan-         ###   ########.fr       */
+/*   Updated: 2024/07/23 19:31:44 by thomvan-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,19 +26,18 @@ int	main(int arc, char **arv)
 	m = t_mapinit(m);
 	if (!mapper(&m, arv[1]))
 		return (1);
-	mapdisplay(m.map);
 	mapsize(&m, 32);
-	m.data.mlx_ptr = mlx_init();
-	m.data = image_loader(m.data);
-	if (!m.data.mlx_ptr)
+	m.d.mlx_ptr = mlx_init();
+	m.d = image_loader(m.d);
+	if (!m.d.mlx_ptr)
 		return (1);
-	m.data.win_ptr = mlx_new_window(m.data.mlx_ptr, m.data.h, m.data.w, "hi :)");
-	if (!m.data.win_ptr)
-		return (free(m.data.mlx_ptr), free(m.data.image_ptr), 1);
+	m.d.win_ptr = mlx_new_window(m.d.mlx_ptr, m.d.h, m.d.w, "hi :)");
+	if (!m.d.win_ptr)
+		return (free(m.d.mlx_ptr), free(m.d.image_ptr), 1);
 	map_draw(&m);
-	mlx_hook(m.data.win_ptr, KeyPress, KeyPressMask, &on_keypress, &m);
-	mlx_hook(m.data.win_ptr, DestroyNotify, StructureNotifyMask, &on_destroy, &m.data);
-	mlx_loop(m.data.mlx_ptr);
+	mlx_hook(m.d.win_ptr, KeyPress, KeyPMask, &on_keypress, &m);
+	mlx_hook(m.d.win_ptr, DesNotify, StructNyMask , &on_destroy, &m.d);
+	mlx_loop(m.d.mlx_ptr);
 	return (0);
 }
 
@@ -73,25 +72,33 @@ char	**mapper(t_map *m, char *name)
 	m->c_count = c_finder(m->map, m, 0);
 	if (!floodfill(m->map, map_cpy(m->map), m)
 		|| !c_f_fill(m->map, map_cpy(m->map), m, m))
+	{
 		ft_printf("Error : path missing\n");
-	if (er_finder(m->map, m))
-		ft_printf("Error : map invalid characters allowed : 'C' '0' '1' 'E' 'P'\n");
+		return (NULL);
+	}
+	m->collected = 0;
+	if (er_finder(m->map))
+	{
+		ft_printf("Error : map invalid\ncharacters allowed : 'C' '0' '1' 'E' 'P'\n");
+		return (NULL);
+	}
 	return (m->map);
 }
 
-t_data	image_loader(t_data data)
+t_data	image_loader(t_data d)
 {
 	int		w;
 	int		h;
 
 	w = 32;
 	h = 32;
-	data.image_ptr[0] = mlx_xpm_file_to_image(data.mlx_ptr, Grass, &w, &h);
-	data.image_ptr[1] = mlx_xpm_file_to_image(data.mlx_ptr, Wall, &w, &h);
-	data.image_ptr[2] = mlx_xpm_file_to_image(data.mlx_ptr, Chest, &w, &h);
-	data.image_ptr[3] = mlx_xpm_file_to_image(data.mlx_ptr, Close, &w, &h);
-	data.image_ptr[4] = mlx_xpm_file_to_image(data.mlx_ptr, Open, &w, &h);
-	return (data);
+	d.image_ptr[0] = mlx_xpm_file_to_image(d.mlx_ptr, Grass, &w, &h);
+	d.image_ptr[1] = mlx_xpm_file_to_image(d.mlx_ptr, Wall, &w, &h);
+	d.image_ptr[2] = mlx_xpm_file_to_image(d.mlx_ptr, Chest, &w, &h);
+	d.image_ptr[3] = mlx_xpm_file_to_image(d.mlx_ptr, Close, &w, &h);
+	d.image_ptr[4] = mlx_xpm_file_to_image(d.mlx_ptr, Player, &w, &h);
+	d.image_ptr[5] = mlx_xpm_file_to_image(d.mlx_ptr, Open, &w, &h);
+	return (d);
 }
 
 
