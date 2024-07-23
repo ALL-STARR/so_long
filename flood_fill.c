@@ -6,7 +6,7 @@
 /*   By: thomvan- <thomvan-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/15 11:37:15 by marvin            #+#    #+#             */
-/*   Updated: 2024/07/23 18:51:30 by thomvan-         ###   ########.fr       */
+/*   Updated: 2024/07/23 20:22:39 by thomvan-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,8 +50,7 @@ int	c_f_fill(char **map, int **been, t_map *m, t_map *pass)
 {
 	const int	directions[4][2] = {{-1, 0}, {1, 0}, {0, -1}, {0, 1}};
 	int			i;
-	int			new_row;
-	int			new_col;
+	t_pos		n;
 	t_map		new_pos;
 
 	i = 0;
@@ -60,14 +59,14 @@ int	c_f_fill(char **map, int **been, t_map *m, t_map *pass)
 		return (1);
 	while (i < 4)
 	{
-		new_row = m->st.row + directions[i][0];
-		new_col = m->st.col + directions[i][1];
-		if (is_valid(map, been, new_row, new_col))
+		n.row = m->st.row + directions[i][0];
+		n.col = m->st.col + directions[i][1];
+		if (is_valid(map, been, n.row, n.col))
 		{
-			if (map[new_row][new_col] == 'C')
+			if (map[n.row][n.col] == 'C')
 				pass->collected++;
-			new_pos.st.row = new_row;
-			new_pos.st.col = new_col;
+			new_pos.st.row = n.row;
+			new_pos.st.col = n.col;
 			if (c_f_fill(map, been, &new_pos, pass))
 				return (1);
 		}
@@ -76,12 +75,10 @@ int	c_f_fill(char **map, int **been, t_map *m, t_map *pass)
 	return (0);
 }
 
-int	c_finder(char **map, t_map *m, int count)
+int	c_finder(char **map, t_map *m, int count, int i)
 {
-	int	i;
 	int	j;
 
-	i = 0;
 	while (map[i])
 	{
 		j = 0;

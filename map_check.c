@@ -6,7 +6,7 @@
 /*   By: thomvan- <thomvan-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/13 13:27:25 by marvin            #+#    #+#             */
-/*   Updated: 2024/07/21 15:24:21 by thomvan-         ###   ########.fr       */
+/*   Updated: 2024/07/23 20:27:17 by thomvan-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,8 +39,7 @@ char	**map_check(char *file_name)
 			return (NULL);
 		}
 	}
-	close(fd);
-	return (map_maker(file_name, totlen));
+	return (close(fd), map_maker(file_name, totlen));
 }
 
 char	**map_maker(char *f_n, int tlen)
@@ -69,8 +68,7 @@ char	**map_maker(char *f_n, int tlen)
 		free(buff);
 		return (NULL);
 	}
-	free(buff);
-	return (map);
+	return (free(buff), map);
 }
 
 int	counter(char *buf)

@@ -6,13 +6,13 @@
 /*   By: thomvan- <thomvan-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/21 15:42:06 by thomvan-          #+#    #+#             */
-/*   Updated: 2024/07/23 19:17:11 by thomvan-         ###   ########.fr       */
+/*   Updated: 2024/07/23 20:50:54 by thomvan-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "so_long.h"
 
-int on_destroy(t_data *d)
+int	on_destroy(t_data *d)
 {
 	mlx_destroy_image(d->mlx_ptr, d->image_ptr[0]);
 	mlx_destroy_image(d->mlx_ptr, d->image_ptr[1]);
@@ -26,14 +26,14 @@ int on_destroy(t_data *d)
 	return (0);
 }
 
-int on_keypress(int keycode, t_map *m)
+int	on_keypress(int keycode, t_map *m)
 {
-	if (keycode == key_esc)
+	if (keycode == KEY_ESC)
 		on_destroy(&m->d);
-	if (keycode == key_w || keycode == key_a || keycode == key_s
-		|| keycode == key_d)
+	if (keycode == KEY_W || keycode == KEY_A || keycode == KEY_S
+		|| keycode == KEY_D)
 	{
-		if (keycode == key_w)
+		if (keycode == KEY_W)
 			move(3, m);
 		else
 			move(keycode, m);
@@ -48,7 +48,6 @@ void	mapsize(t_map *m, int tile_size)
 
 	i = 0;
 	j = 0;
-
 	while (m->map[i] != NULL)
 		i++;
 	while (m->map[0][j] != '\0')
